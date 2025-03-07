@@ -1,0 +1,15 @@
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\bin\Debug\net8.0\Unioteq.TrackNTrace.Models.deps.json
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\bin\Debug\net8.0\Unioteq.TrackNTrace.Models.runtimeconfig.json
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\bin\Debug\net8.0\Unioteq.TrackNTrace.Models.dll
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\bin\Debug\net8.0\Unioteq.TrackNTrace.Models.pdb
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.csproj.AssemblyReference.cache
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.sourcelink.json
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.dll
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\refint\Unioteq.TrackNTrace.Models.dll
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.pdb
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\Unioteq.TrackNTrace.Models.genruntimeconfig.cache
+C:\Users\Admin\OneDrive\Desktop\Unioteq.TrackNTrace\Unioteq.TrackNTrace.Models\obj\Debug\net8.0\ref\Unioteq.TrackNTrace.Models.dll
