@@ -1,0 +1,78 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.LineEntity
+
+@{
+    ViewBag.Title = "Edit Line";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-8">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title">@ViewBag.Title</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="LineId" />
+
+                    <div class="mb-3">
+                        <label asp-for="LineCode" class="form-label"></label>
+                        <input asp-for="LineCode" class="form-control" />
+                        <span asp-validation-for="LineCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="LineName" class="form-label"></label>
+                        <input asp-for="LineName" class="form-control" />
+                        <span asp-validation-for="LineName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="LineDescription" class="form-label"></label>
+                        <textarea asp-for="LineDescription" class="form-control"></textarea>
+                        <span asp-validation-for="LineDescription" class="text-danger"></span>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.PlantId, htmlAttributes: new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.PlantId, ViewBag.PlantList as SelectList, "----- Select -----", new { @class = "form-control" })
+                                <span asp-validation-for="PlantId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.ShopFloorId, htmlAttributes: new { @class = "form-label" })
+                                @Html.DropDownListFor(model => model.ShopFloorId, ViewBag.ShopFloorList as SelectList, "----- Select -----", new { @class = "form-control" })
+                                <span asp-validation-for="ShopFloorId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-label" })
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { id = "IsActiveSwitch", @class = "form-check-input", @role = "switch" })
+                                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-check-label", @for = "IsActiveSwitch" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->

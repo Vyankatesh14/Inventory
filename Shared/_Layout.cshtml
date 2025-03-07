@@ -1,0 +1,305 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewBag.Title - Unioteq</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Unioteq TrackNTrace" />
+    <meta name="author" content="Unioteq TrackNTrace" />
+    <meta property="og:title" content="@ViewBag.Title">
+    <meta property="og:description" content="Unioteq TrackNTrace">
+    <meta property="og:type" content="Website">
+    <meta property="og:site_name" content="Unioteq TrackNTrace">
+    <link rel="shortcut icon" href="~/images/unioteq_logo -short.png" />
+
+    <!-- *************
+            ************ CSS Files *************
+        ************* -->
+    <link href="~/fonts/bootstrap/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/css/main.min.css" rel="stylesheet" />
+    <!-- *************
+        ************ Vendor Css Files *************
+    ************ -->
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" href="~/js/vendor/toastify/toastify.css" />
+
+    @RenderSection("styles", required: false)
+
+
+</head>
+<body>
+    <!-- Page wrapper start -->
+    <div class="page-wrapper pinned">
+        <!-- App header starts -->
+        <div class="app-header d-flex align-items-center">
+
+            <!-- Toggle buttons start -->
+            <div class="d-flex">
+                <button class="toggle-sidebar" id="toggle-sidebar">
+                    <i class="bi bi-list lh-1"></i>
+                </button>
+                <button class="pin-sidebar" id="pin-sidebar">
+                    <i class="bi bi-list lh-1"></i>
+                </button>
+            </div>
+            <!-- Toggle buttons end -->
+            <!-- App brand starts -->
+            <div class="app-brand py-2 ms-3">
+                <a href="index.html" class="d-sm-block d-none">
+                    <img src="~/images/unioteq_logo.png" class="logo" alt="Unioteq" />
+                </a>
+                <a href="index.html" class="d-sm-none d-block">
+                    <img src="~/images/unioteq_logo -short.png" class="logo" alt="Unioteq" />
+                </a>
+            </div>
+            <!-- App brand ends -->
+            <!-- App header actions start -->
+            <div class="header-actions col">
+                <div class="d-lg-flex d-none">
+                    <div class="dropdown border-start">
+                        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-exclamation-triangle fs-4 lh-1 text-secondary"></i>
+                            <span class="count-label warning"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                            <h5 class="fw-semibold px-3 py-2 text-primary">
+                                Notifications
+                            </h5>
+                            <div class="dropdown-item">
+                                <div class="d-flex py-2 border-bottom">
+                                    <div class="icon-box md bg-success rounded-circle me-3">
+                                        <i class="bi bi-exclamation-triangle text-white fs-4"></i>
+                                    </div>
+                                    <div class="m-0">
+                                        <h6 class="mb-1 fw-semibold">Rosalie Deleon</h6>
+                                        <p class="mb-1">You have new order.</p>
+                                        <p class="small m-0 text-secondary">30 mins ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item">
+                                <div class="d-flex py-2 border-bottom">
+                                    <div class="icon-box md bg-danger rounded-circle me-3">
+                                        <i class="bi bi-exclamation-octagon text-white fs-4"></i>
+                                    </div>
+                                    <div class="m-0">
+                                        <h6 class="mb-1 fw-semibold">Donovan Stuart</h6>
+                                        <p class="mb-1">Membership has been expired.</p>
+                                        <p class="small m-0 text-secondary">2 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item">
+                                <div class="d-flex py-2">
+                                    <div class="icon-box md bg-warning rounded-circle me-3">
+                                        <i class="bi bi-exclamation-square text-white fs-4"></i>
+                                    </div>
+                                    <div class="m-0">
+                                        <h6 class="mb-1 fw-semibold">Roscoe Richards</h6>
+                                        <p class="mb-1">Payment pending. Pay now.</p>
+                                        <p class="small m-0 text-secondary">3 days ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid mx-3 my-1">
+                                <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown border-start">
+                        <a class="dropdown-toggle d-flex px-3 py-4 position-relative" href="#!" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell fs-4 lh-1 text-secondary"></i>
+                            <span class="count-label info"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                            <h5 class="fw-semibold px-3 py-2 text-primary">Updates</h5>
+                            <div class="dropdown-item">
+                                <div class="d-flex py-2 border-bottom">
+                                    <div class="icon-box md bg-success rounded-circle me-3">
+                                        <span class="fw-bold text-white">DS</span>
+                                    </div>
+                                    <div class="m-0">
+                                        <h6 class="mb-1 fw-semibold">Douglass Shaw</h6>
+                                        <p class="mb-1">
+                                            Membership has been ended.
+                                        </p>
+                                        <p class="small m-0 text-secondary">Today, 07:30pm</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item">
+                                <div class="d-flex py-2 border-bottom">
+                                    <div class="icon-box md bg-danger rounded-circle me-3">
+                                        <span class="fw-bold text-white">WG</span>
+                                    </div>
+                                    <div class="m-0">
+                                        <h6 class="mb-1 fw-semibold">Willie Garrison</h6>
+                                        <p class="mb-1">
+                                            Congratulate, James for new job.
+                                        </p>
+                                        <p class="small m-0 text-secondary">Today, 08:00pm</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item">
+                                <div class="d-flex py-2">
+                                    <div class="icon-box md bg-warning rounded-circle me-3">
+                                        <span class="fw-bold text-white">TJ</span>
+                                    </div>
+                                    <div class="m-0">
+                                        <h6 class="mb-1 fw-semibold">Terry Jenkins</h6>
+                                        <p class="mb-1">
+                                            Lewis added new schedule release.
+                                        </p>
+                                        <p class="small m-0 text-secondary">Today, 09:30pm</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-grid mx-3 my-1">
+                                <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dropdown ms-2">
+                    <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none" href="#!"
+                       role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/images/unioteq_logo -short.png" class="rounded-2 img-3x" alt="User Photo" />
+                        @* <span class="ms-2 text-truncate d-lg-block d-none">@Session["UserName"]</span> *@
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end shadow-lg">
+                        @*<div class="header-action-links mx-3 gap-2">
+                        <a class="dropdown-item" href="profile.html"><i class="bi bi-person text-primary"></i>Profile</a>
+                        <a class="dropdown-item" href="settings.html"><i class="bi bi-gear text-danger"></i>Settings</a>
+                        <a class="dropdown-item" href="widgets.html"><i class="bi bi-box text-success"></i>Widgets</a>
+                        </div>*@
+                        <div class="mx-3 mt-2 d-grid">
+                            <a href="@Url.Content("~/Home")" class="btn btn-primary btn-sm">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- App header actions end -->
+
+        </div>
+        <!-- App header ends -->
+        <!-- Main container start -->
+        <div class="main-container">
+            <nav id="sidebar" class="sidebar-wrapper">
+
+                <!-- Sidebar profile starts -->
+                <!-- <div class="shop-profile">
+                    <p class="mb-1 fw-bold text-primary">Walmart</p>
+                    <p class="m-0">Los Angeles, California</p>
+                </div> -->
+                <!-- Sidebar profile ends -->
+                <!-- Sidebar menu starts -->
+                <div class="sidebarMenuScroll">
+                    <ul class="sidebar-menu">
+                        <li class="active current-page">
+                            <a href="index.html">
+                                <i class="bi bi-pie-chart"></i>
+                                <span class="menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="analytics.html">
+                                <i class="bi bi-bar-chart-line"></i>
+                                <span class="menu-text">Analytics</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="widgets.html">
+                                <i class="bi bi-box"></i>
+                                <span class="menu-text">Widgets</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="calendar.html">
+                                <i class="bi bi-calendar2"></i>
+                                <span class="menu-text">Calendar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- App container starts -->
+            <div class="app-container">
+
+                <!-- App body starts -->
+                <div class="app-body">
+                    @RenderBody()
+                </div>
+                <!-- App body ends -->
+                <!-- App footer start -->
+                <div class="app-footer">
+                    <span>© Unioteq Commercial Services Pvt. Ltd.</span>
+                </div>
+                <!-- App footer end -->
+
+            </div>
+            <!-- App container ends -->
+        </div>
+        <!-- Main container end -->
+    </div>
+    <!-- Page wrapper end -->
+    <!-- *************
+        ************ JavaScript Files *************
+    ************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+
+    <!-- *************
+        ************ Vendor Js Files *************
+    ************* -->
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+
+    <!-- Custom JS files -->
+    <script src="~/js/custom.js"></script>
+
+    @if (TempData["ActionMessage"] != null)
+    {
+        <!-- Toastify JS -->
+        <script src="~/js/vendor/toastify/toastify.js"></script>
+        <script>
+            var toastClass = '';
+            var toastAvatar = '';
+            if ('@TempData["ActionStatus"]' == 'Success') {
+                toastClass = 'bg-success';
+                toastAvatar = '';
+            }
+            else if ('@TempData["ActionStatus"]' == 'Fail') {
+                toastClass = 'bg-danger';
+                toastAvatar = '';
+            }
+
+            Toastify({
+                text: '@TempData["ActionMessage"]',
+                duration: 3000,
+                close: true,
+                //avatar: 'assets/images/user3.png',
+                //className: "bg-success",
+                avatar: toastAvatar,
+                className: toastClass,
+                offset: {
+                    x: 9,
+                    y: 57,
+                },
+            }).showToast();
+
+        </script>
+    }
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>
+
+

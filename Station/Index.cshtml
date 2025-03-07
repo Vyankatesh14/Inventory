@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Unioteq.TrackNTrace.Models.Entity.StationEntity>
+
+@{
+    ViewBag.Title = "Station List";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">@ViewBag.Title</h5>
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Create", "Station")">
+                    <i class="bi bi-plus-square"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="stationTable" class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Html.DisplayNameFor(model => model.StationName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.PlantName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.ShopFloorName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.LineName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.StationDescription)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.StationCode)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.IsActive)</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.StationName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PlantName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ShopFloorName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LineName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StationDescription)</td>
+
+                                    <td>@Html.DisplayFor(modelItem => item.StationCode)</td>
+                                    <td>
+                                        @if (item.IsActive == true)
+                                        {
+                                            <span class="badge border border-success text-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge border border-danger text-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-info btn-sm" href="@Url.Action("Edit", "Station", new { id = item.StationId })">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-outline-danger btn-icon btn-sm" href="@Url.Action("Delete", "Station", new { id = item.StationId })" onclick="return confirm('wants to delete?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Unioteq.TrackNTrace.Models.Entity.LineEntity>
+
+@{
+    ViewBag.Title = "Line List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">@ViewBag.Title</h5>
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Create", "Line")">
+                    <i class="bi bi-plus-square"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="lineTable" class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().LineCode)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().LineName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().PlantName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().ShopFloorName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().LineDescription)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().IsActive)</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.LineCode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LineName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PlantName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.ShopFloorName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.LineDescription)</td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge border border-success text-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge border border-danger text-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-info btn-sm" href="@Url.Action("Edit", "Line", new { id = item.LineId })">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <!-- Form for Delete Action -->
+                                        <form asp-action="Delete" asp-controller="Line" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@item.LineId" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
+
+@section scripts {
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/2.0.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#lineTable').DataTable();
+        });
+    </script>
+}

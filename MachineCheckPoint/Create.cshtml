@@ -1,0 +1,187 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.MachineCheckPointEntity
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Create - Machine CheckPoint</h6>
+        </div>
+        <div class="card-body">
+            <!-- IsActive Radio -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="IsActive">Is Active</label>
+                <div class="col-md-10">
+                    <input class="control-label" id="IsActive_Yes" name="IsActive" type="radio" value="True" checked="checked"> Yes
+                    <input class="control-label" id="IsActive_No" name="IsActive" type="radio" value="False"> No
+                </div>
+            </div>
+
+            <!-- Machine Dropdown -->
+            <div class="form-group">
+                <label asp-for="MachineId" class="control-label"></label>
+                <select asp-for="MachineId" asp-items="ViewBag.MachineList" id="MachineId" class="form-control">
+                    <option value="">--- Select Machine ---</option>
+                </select>
+                <span asp-validation-for="MachineId" class="text-danger"></span>
+            </div>
+
+            <!-- Machine Part Dropdown -->
+            <div class="form-group">
+                <label asp-for="MachinePartId" class="control-label"></label>
+                <select asp-for="MachinePartId" asp-items="ViewBag.MachinePartList" id="MachinePartId" class="form-control" disabled>
+                    <option value="">--- Select Machine Part ---</option>
+                </select>
+                <span asp-validation-for="MachinePartId" class="text-danger"></span>
+            </div>
+
+            <!-- jQuery to Handle Dynamic Dropdown Fetch -->
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#MachineId').change(function () {
+                        var machineId = $(this).val(); // Get selected Machine ID
+                        var $machinePartDropdown = $('#MachinePartId'); // MachinePart dropdown
+
+                        // Clear existing options
+                        $machinePartDropdown.empty();
+                        $machinePartDropdown.append('<option value="">--- Select Machine Part ---</option>');
+
+                        if (machineId) {
+                            $.ajax({
+                                url: '@Url.Action("GetMachineParts", "MachineCheckPoint")',
+                                type: 'GET',
+                                data: { machineId: machineId },
+                                success: function (data) {
+                                    $.each(data, function (index, part) {
+                                        $machinePartDropdown.append('<option value="' + part.id + '">' + part.name + '</option>');
+                                    });
+
+                                    // Enable dropdown after data is loaded
+                                    $machinePartDropdown.prop('disabled', false);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error fetching machine parts:', error);
+                                }
+                            });
+                        } else {
+                            // If no machine is selected, disable and clear MachinePart dropdown
+                            $machinePartDropdown.prop('disabled', true);
+                        }
+                    });
+                });
+            </script>
+
+            <!-- Effect Radio -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Effect">Effect</label>
+                <div class="row">
+                    <div class="col-3">
+                        <input class="control-label" id="Effect_Breakdown" name="Effect" type="radio" value="Breakdown"> <img src="/Content/Images/Icon-Breakdown.png" width="25px" height="20px"> Breakdown <br>
+                    </div>
+                    <div class="col-3">
+                        <input class="control-label" id="Effect_Deffect" name="Effect" type="radio" value="Deffect"> <img src="/Content/Images/Icon-Deffect.png" width="25px" height="20px"> Deffect <br>
+                    </div>
+                    <div class="col-3">
+                        <input class="control-label" id="Effect_Accident" name="Effect" type="radio" value="Accident"> <img src="/Content/Images/Icon-Accident.png" width="25px" height="20px"> Accident
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check Point Input -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CheckPointName">Check Point Name</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Check Point Name is required." id="CheckPointName" name="CheckPointName" type="text" value="">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="CheckPointName" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <!-- Validation Type Radio -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ValidationType">Validation Type</label>
+                <div class="col-md-10">
+                    <input class="control-label" id="ValidationType_OKNOK" name="ValidationType" type="radio" value="OKNOK" checked="checked"> OK/NOK
+                    <input class="control-label" id="ValidationType_ValueRange" name="ValidationType" type="radio" value="ValueRange"> Value Range
+                </div>
+            </div>
+
+            <!-- JavaScript for Validation Type -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $(".RangeValues").hide();
+                    $('input[name="ValidationType"]').change(function () {
+                        if ($(this).val() == "OKNOK") {
+                            $(".RadioValues").show();
+                            $(".RangeValues").hide();
+                        } else {
+                            $(".RadioValues").hide();
+                            $(".RangeValues").show();
+                        }
+                    });
+                });
+            </script>
+
+            <!-- Radio Value Inputs -->
+            <div class="form-group RadioValues">
+                <label class="control-label col-md-2" for="StandardText">Standard Text</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="StandardText" name="StandardText" placeholder="Standard Text" type="text" value="">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="OKText" name="OKText" placeholder="OK Text" type="text" value="">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="NOKText" name="NOKText" placeholder="NOK Text" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Range Values Input -->
+            <div class="form-group RangeValues" style="display: none;">
+                <label class="control-label col-md-2" for="ValueUOM">Value Range</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="ValueUOM" name="ValueUOM" placeholder="Value Range UOM" type="text" value="">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" data-val="true" data-val-number="The field MinValue must be a number." data-val-required="The MinValue field is required." id="MinValue" name="MinValue" type="text" value="">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" data-val="true" data-val-number="The field MaxValue must be a number." data-val-required="The MaxValue field is required." id="MaxValue" name="MaxValue" type="text" value="">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check Method Dropdown -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CheckMethod">Check Method</label>
+                <div class="col-md-10">
+                    <select class="form-control" data-val="true" data-val-required="Check Method is required." id="CheckMethod" name="CheckMethod">
+                        <option value="">--- Select Check Method ---</option>
+                        <option value="1">Visual</option>
+                        <option value="2">Physical</option>
+                    </select>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="CheckMethod" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <!-- Frequency -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Frequency">Frequency</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Frequency is required." id="Frequency" name="Frequency" type="text" value="">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Frequency" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+            <br />
+            <!-- Submit Button -->
+            <div class="form-group">
+                <div class="col-md-10 col-md-offset-2">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Unioteq.TrackNTrace.Models.Entity.OperatorSkillEntity>
+
+@{
+    ViewBag.Title = "OperatorSkill List";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">@ViewBag.Title</h5>
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Create", "OperatorSkill")">
+                    <i class="bi bi-plus-square"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="userTable" class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.OperatorSkillName)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.IsActive)
+                                </th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.OperatorSkillName)
+                                    </td>
+                                    <td>
+                                        @if (item.IsActive == true)
+                                        {
+                                            <span class="badge border border-success text-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge border border-danger text-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-info btn-sm" href="@Url.Action("Edit", "OperatorSkill", new { id = item.OperatorSkillId })">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <!-- Form for Delete Action -->
+                                        <form asp-action="DeleteConfirmed" asp-controller="ModelParts" method="post" style="display:inline;">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.OperatorSkillId" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this Model Part?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
+@section scripts {
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        $('#userTable').DataTable();
+    </script>
+}
+

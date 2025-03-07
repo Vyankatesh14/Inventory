@@ -1,0 +1,78 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.DeviceMasterEntity
+
+@{
+    ViewBag.Title = "Edit Device Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-8">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title">@ViewBag.Title</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="Id" />
+
+                    <div class="mb-3">
+                        <label asp-for="CompId" class="form-label"></label>
+                        @Html.DropDownListFor(model => model.CompId, ViewBag.CompanyList as SelectList, "----- Select Company -----", new { @class = "form-control" })
+                        <span asp-validation-for="CompId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="PlantId" class="form-label"></label>
+                        @Html.DropDownListFor(model => model.PlantId, ViewBag.PlantList as SelectList, "----- Select Plant -----", new { @class = "form-control" })
+                        <span asp-validation-for="PlantId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="LineId" class="form-label"></label>
+                        @Html.DropDownListFor(model => model.LineId, ViewBag.LineList as SelectList, "----- Select Line -----", new { @class = "form-control" })
+                        <span asp-validation-for="LineId" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="MacCode" class="form-label"></label>
+                        <input asp-for="MacCode" class="form-control" />
+                        <span asp-validation-for="MacCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ActivationDate" class="form-label"></label>
+                        <input asp-for="ActivationDate" class="form-control" type="date" />
+                        <span asp-validation-for="ActivationDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ExpiryDate" class="form-label"></label>
+                        <input asp-for="ExpiryDate" class="form-control" type="date" />
+                        <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="DeviceCode" class="form-label"></label>
+                        <input asp-for="DeviceCode" class="form-control" />
+                        <span asp-validation-for="DeviceCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="IsActive" class="form-label"></label>
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(model => model.IsActive.Value, new { id = "IsActiveSwitch", @class = "form-check-input", @role = "switch" })
+                            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-check-label", @for = "IsActiveSwitch" })
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->

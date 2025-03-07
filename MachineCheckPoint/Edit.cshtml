@@ -1,0 +1,194 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.MachineCheckPointEntity
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="MachineCheckPointId" />
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Edit - Machine CheckPoint</h6>
+        </div>
+        <div class="card-body">
+            <!-- IsActive Radio -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="IsActive">Is Active</label>
+                <div class="col-md-10">
+                    <input class="control-label" id="IsActive_Yes" name="IsActive" type="radio" value="True" @(Model.IsActive ? "checked" : "")> Yes
+                    <input class="control-label" id="IsActive_No" name="IsActive" type="radio" value="False" @(!Model.IsActive ? "checked" : "")> No
+                </div>
+            </div>
+
+            <!-- Machine Dropdown -->
+            <div class="form-group">
+                <label asp-for="MachineId" class="control-label"></label>
+                <select asp-for="MachineId" asp-items="ViewBag.MachineList" id="MachineId" class="form-control">
+                    <option value="">--- Select Machine ---</option>
+                </select>
+                <span asp-validation-for="MachineId" class="text-danger"></span>
+            </div>
+
+            <!-- Machine Part Dropdown -->
+            <div class="form-group">
+                <label asp-for="MachinePartId" class="control-label"></label>
+                <select asp-for="MachinePartId" asp-items="ViewBag.MachinePartList" id="MachinePartId" class="form-control">
+                    <option value="">--- Select Machine Part ---</option>
+                </select>
+                <span asp-validation-for="MachinePartId" class="text-danger"></span>
+            </div>
+
+            <!-- jQuery to Handle Dynamic Dropdown Fetch -->
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    // Set the dropdown value for MachineId and MachinePartId from the model
+                    $('#MachineId').val('@Model.MachineId').change();
+
+                    $('#MachineId').change(function () {
+                        var machineId = $(this).val(); // Get selected Machine ID
+                        var $machinePartDropdown = $('#MachinePartId'); // MachinePart dropdown
+
+                        // Clear existing options
+                        $machinePartDropdown.empty();
+                        $machinePartDropdown.append('<option value="">--- Select Machine Part ---</option>');
+
+                        if (machineId) {
+                            $.ajax({
+                                url: '@Url.Action("GetMachineParts", "MachineCheckPoint")',
+                                type: 'GET',
+                                data: { machineId: machineId },
+                                success: function (data) {
+                                    $.each(data, function (index, part) {
+                                        $machinePartDropdown.append('<option value="' + part.id + '">' + part.name + '</option>');
+                                    });
+
+                                    // Set the selected value
+                                    $machinePartDropdown.val('@Model.MachinePartId').prop('disabled', false);
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error('Error fetching machine parts:', error);
+                                }
+                            });
+                        } else {
+                            // If no machine is selected, disable and clear MachinePart dropdown
+                            $machinePartDropdown.prop('disabled', true);
+                        }
+                    });
+                });
+            </script>
+
+            <!-- Effect Radio -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Effect">Effect</label>
+                <div class="row">
+                    <div class="col-3">
+                        <input class="control-label" id="Effect_Breakdown" name="Effect" type="radio" value="Breakdown" @(Model.Effect == "Breakdown" ? "checked" : "")> <img src="/Content/Images/Icon-Breakdown.png" width="25px" height="20px"> Breakdown <br>
+                    </div>
+                    <div class="col-3">
+                        <input class="control-label" id="Effect_Deffect" name="Effect" type="radio" value="Deffect" @(Model.Effect == "Deffect" ? "checked" : "")> <img src="/Content/Images/Icon-Deffect.png" width="25px" height="20px"> Deffect <br>
+                    </div>
+                    <div class="col-3">
+                        <input class="control-label" id="Effect_Accident" name="Effect" type="radio" value="Accident" @(Model.Effect == "Accident" ? "checked" : "")> <img src="/Content/Images/Icon-Accident.png" width="25px" height="20px"> Accident
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check Point Name Input -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CheckPointName">Check Point Name</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Check Point Name is required." id="CheckPointName" name="CheckPointName" type="text" value="@Model.CheckPointName" />
+                    <span class="field-validation-valid text-danger" data-valmsg-for="CheckPointName" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+
+            <!-- Validation Type Radio -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ValidationType">Validation Type</label>
+                <div class="col-md-10">
+                    <input class="control-label" id="ValidationType_OKNOK" name="ValidationType" type="radio" value="OKNOK" @(Model.ValidationType == "OKNOK" ? "checked" : "")> OK/NOK
+                    <input class="control-label" id="ValidationType_ValueRange" name="ValidationType" type="radio" value="ValueRange" @(Model.ValidationType == "ValueRange" ? "checked" : "")> Value Range
+                </div>
+            </div>
+
+            <!-- JavaScript for Validation Type -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $(".RangeValues").hide();
+                    $('input[name="ValidationType"]').change(function () {
+                        if ($(this).val() == "OKNOK") {
+                            $(".RadioValues").show();
+                            $(".RangeValues").hide();
+                        } else {
+                            $(".RadioValues").hide();
+                            $(".RangeValues").show();
+                        }
+                    }).change(); // Trigger change to handle the initial state
+                });
+            </script>
+
+            <!-- Radio Value Inputs -->
+            <div class="form-group RadioValues">
+                <label class="control-label col-md-2" for="StandardText">Standard Text</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="StandardText" name="StandardText" placeholder="Standard Text" type="text" value="@Model.StandardText">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="OKText" name="OKText" placeholder="OK Text" type="text" value="@Model.OKText">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="NOKText" name="NOKText" placeholder="NOK Text" type="text" value="@Model.NOKText">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Range Values Input -->
+            <div class="form-group RangeValues">
+                <label class="control-label col-md-2" for="ValueUOM">Value Range</label>
+                <div class="row">
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" id="ValueUOM" name="ValueUOM" placeholder="Value Range UOM" type="text" value="@Model.ValueUOM">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" data-val="true" data-val-number="The field MinValue must be a number." data-val-required="The MinValue field is required." id="MinValue" name="MinValue" type="text" value="@Model.ValueRangeForm">
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control text-box single-line" data-val="true" data-val-number="The field MaxValue must be a number." data-val-required="The MaxValue field is required." id="MaxValue" name="MaxValue" type="text" value="@Model.ValueRangeTo">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Check Method Dropdown -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CheckMethod">Check Method</label>
+                <div class="col-md-10">
+                    <select class="form-control" data-val="true" data-val-required="Check Method is required." id="CheckMethod" name="CheckMethod">
+                        <option value="">--- Select Check Method ---</option>
+                        <option value="1">Visual</option>
+                        <option value="2">Physical</option>
+                    </select>
+                    <span class="field-validation-valid text-danger" data-valmsg-for="CheckMethod" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <!-- Frequency -->
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Frequency">Frequency</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" data-val="true" data-val-required="Frequency is required." id="Frequency" name="Frequency" type="text" value="">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Frequency" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-group">
+        <div class="col-md-10">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</form>

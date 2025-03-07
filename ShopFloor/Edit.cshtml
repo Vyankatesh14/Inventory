@@ -1,0 +1,63 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.ShopFloorEntity
+
+
+@{
+    ViewBag.Title = "Edit ShopFloor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row gx-3">
+    <div class="col-xxl-8">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="card-title">@ViewBag.Title</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    <input type="hidden" asp-for="ShopFloorId" />
+
+
+                    <div class="mb-3">
+                        <label asp-for="ShopFloorName" class="form-label"></label>
+                        <input asp-for="ShopFloorName" class="form-control" />
+                        <span asp-validation-for="ShopFloorName" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ShopFloorCode" class="form-label"></label>
+                        <input asp-for="ShopFloorCode" class="form-control" />
+                        <span asp-validation-for="ShopFloorCode" class="text-danger"></span>
+                    </div>
+
+                    <div class="gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.PlantId, htmlAttributes: new {@class = "form-lable"})
+                                @Html.DropDownListFor(model => model.PlantId, ViewBag.PlantList as SelectList, "----- Select -----", new { @class = "form-control" })
+                                <span asp-validation-for="PlantId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=" gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.IsActive, htmlAttributes: new {@class = "form-lable"})
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { id = "IsActiveSwitch", @class = "form-check-input", @role = "switch"})
+                                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new {@class = "form-check-lable", @for = ""})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="submit" value="Save Changes" class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

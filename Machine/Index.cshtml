@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Unioteq.TrackNTrace.Models.Entity.MachineEntity>
+
+@{
+    ViewBag.Title = "Machine List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Display success or error messages -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="imagePreview" src="" alt="Image Preview" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">@ViewBag.Title</h5>
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Create", "Machine")">
+                    <i class="bi bi-plus-square"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="machineTable" class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().MachineCode)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().MachineName)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().MachineDetail)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().LineName)</th>
+                                 <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().MachineManual)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.FirstOrDefault().IsActive)</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.MachineCode)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MachineName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MachineDetail)</td>
+                                
+                                    
+                                    <td>@Html.DisplayFor(modelItem => item.LineName)</td>
+                                    
+                                
+
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(item.MachineManual))
+                                        {
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal" data-image-url="@Url.Action("ViewManual", "Machine", new { fileName = item.MachineManual })">View Manual</a>
+                                        }
+                                    </td>
+
+
+                                    <td><span class="badge border border-success text-success">Active</span></td>
+                                    <td>
+                                         <a class="btn btn-outline-info btn-sm" href="@Url.Action("Edit", "Machine", new { id = item.MachineId } )">
+                                            <i class="bi bi-pencil"></i>
+                                        </a> 
+                                        <!-- Form for Delete Action -->
+                                        <form asp-action="Delete" asp-controller="Machine" method="post" style="display:inline;">
+                                            <input type="hidden" name="id" value="@item.MachineId" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this item?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
+@section scripts {
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/2.0.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var imageModal = document.getElementById('imageModal');
+            var imagePreview = document.getElementById('imagePreview');
+
+            imageModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var imageUrl = button.getAttribute('data-image-url');
+                imagePreview.src = imageUrl;
+            });
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#machineTable').DataTable();
+        });
+    </script>
+}

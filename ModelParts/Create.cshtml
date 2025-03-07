@@ -1,0 +1,120 @@
+﻿@model Unioteq.TrackNTrace.Models.Machine.ModelPartView
+
+@{
+    ViewBag.Title = "Create Model Part";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-12 col-md-8 offset-md-2">
+        @using (Html.BeginForm("Create", "ModelParts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="card mb-3">
+                <!-- Card Header -->
+                <div class="card-header">
+                    <h5 class="card-title">@ViewBag.Title</h5>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <!-- Is Active -->
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.IsActive, new { @class = "form-label" })
+                            <div class="form-check form-switch">
+                                @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input", @id = "IsActiveSwitch" })
+                                <label for="IsActiveSwitch" class="form-check-label">Active</label>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+
+                        <!-- Model Code -->
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.ModelId, "Model Code", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.ModelId, ViewBag.ModelList as SelectList, "----- Select -----", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ModelId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Plant and Shop Floor Codes -->
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.PlantId, "Plant Code", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.PlantId, ViewBag.PlantList as SelectList, "----- Select -----", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PlantId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.ShopFloorId, "ShopFloor Code", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.ShopFloorId, ViewBag.ShopFloorList as SelectList, "----- Select -----", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ShopFloorId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Line and Station Codes -->
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.LineId, "Line Code", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.LineId, ViewBag.LineList as SelectList, "----- Select -----", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LineId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.StationId, "Station Code", new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.StationId, ViewBag.StationList as SelectList, "----- Select -----", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.StationId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Part Details -->
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.ModelPartName, new { @class = "form-label" })
+                            @Html.EditorFor(model => model.ModelPartName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ModelPartName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.ModelPartCode, new { @class = "form-label" })
+                            @Html.EditorFor(model => model.ModelPartCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ModelPartCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Part Description and Sequence -->
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.ModelPartDescription, new { @class = "form-label" })
+                            @Html.TextAreaFor(model => model.ModelPartDescription, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ModelPartDescription, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.Sequence, new { @class = "form-label" })
+                            @Html.EditorFor(model => model.Sequence, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Sequence, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-12 mb-3">
+                            @Html.LabelFor(model => model.ModelPartImage, new { @class = "form-label" })
+                            <input asp-for="ModelPartImage" type="file" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.ModelPartImage, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a class="btn btn-outline-danger" href="@Url.Action("Index", "ModelPart")">Cancel</a>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

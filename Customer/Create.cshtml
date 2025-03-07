@@ -1,0 +1,88 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.CustomerEntity
+
+@{
+    ViewBag.Title = "Create Customer";
+}
+
+<div class="row gx-3">
+    <div class="col"></div>
+    <div class="col-6">
+        @using (Html.BeginForm("Create", "Customer", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">@ViewBag.Title</h5>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-label" })
+                                <div class="form-check form-switch">
+                                    @Html.CheckBoxFor(model => model.IsActive, new { id = "IsActiveSwitch", @class = "form-check-input", @role = "switch", @checked = "checked" })
+                                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-check-label", @for = "IsActiveSwitch" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="row gx-3">
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="mb-3">
+                            @Html.LabelFor(model => model.PlantName, htmlAttributes: new { @class = "control-label " })
+                            <div class="col-md-10">
+                                @Html.DropDownListFor(model => model.PlantId, ViewBag.PlantList as SelectList, "----- Select -----", new { @class = "form-control" })
+                                <span asp-validation-for="PlantId" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row gx-3">
+                        <div class="col-lg-6 col-sm-6 col-12">
+                            <div class="mb-3">
+                                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label" })
+                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a class="btn btn-outline-danger" href="@Url.Action("Index")">
+                            Cancel
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+
+        }
+    </div>
+    <div class="col"></div>
+</div>

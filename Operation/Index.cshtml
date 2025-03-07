@@ -1,0 +1,112 @@
+﻿@model IEnumerable<Unioteq.TrackNTrace.Models.Entity.OperationsEntity>
+
+@{
+    ViewBag.Title = "Operation   List";
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">@ViewBag.Title</h5>
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Create", "Operation")">
+                    <i class="bi bi-plus-square"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="userTable" class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.Operation)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.PlantCode)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.ShopFloorCode)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.LineCode)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.StationCode)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.ModelCode)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.Sequence)
+                                </th>
+                                <th scope="col">
+                                    @Html.DisplayNameFor(model => model.IsActive)
+                                </th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Operation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PlantCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ShopFloorCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LineCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StationCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ModelCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Sequence)
+                                    </td>
+                                    <td>
+                                        @if (item.IsActive == true)
+                                        {
+                                            <span class="badge border border-success text-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge border border-danger text-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-outline-info btn-sm" href="@Url.Action("Edit", "Operation", new { id = item.OperationId })">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <!-- Form for Delete Action -->
+                                        <!-- Delete Button with confirmation -->
+                                        <a class="btn btn-outline-danger btn-sm" href="@Url.Action("Delete", "Operation", new { id = item.OperationId })" onclick="return confirm('Are you sure you want to delete this record?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
+@section scripts {
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+
+    <script>
+        $('#userTable').DataTable();
+    </script>
+}

@@ -1,0 +1,145 @@
+﻿@model Unioteq.TrackNTrace.Models.Entity.UserEntity
+
+@{
+    ViewBag.Title = "Register User";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row gx-3">
+    <div class="col"></div>
+    <div class="col-6">
+        @using (Html.BeginForm("Register", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5 class="card-title">@ViewBag.Title</h5>
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-label" })
+                        @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "form-label" })
+                        @Html.EditorFor(model => model.Contact, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.DepartmentId, "Department", htmlAttributes: new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.DepartmentId, ViewBag.Departments as SelectList, "Select Department", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DepartmentId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.PlantId, "Plant", htmlAttributes: new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.PlantId, ViewBag.Plants as SelectList, "Select Plant", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PlantId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.RoleId, "Role", htmlAttributes: new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.RoleId, ViewBag.Roles as SelectList, "Select Role", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="mb-3">
+                        <label>Select Shop Floors:</label>
+                        <div id="shopFloorsContainer">
+                            <!-- Shop floors checkboxes will be appended here -->
+
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.IsActive, "Active", htmlAttributes: new { @class = "form-label" })
+                        <div class="form-check form-switch">
+                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input" })
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                <div class="card-footer">
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a class="btn btn-outline-danger" href="@Url.Action("Index", "User")">Cancel</a>
+                        <button type="submit" class="btn btn-success">Register</button>
+                    </div>
+                </div>
+                
+            </div>
+        }
+        <!-- Link to Login Page -->
+        <div class="text-center mt-3">
+            <p>Already have an account? <a href="@Url.Action("Login", "User")">Login here</a>.</p>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+@section Scripts {
+    <script>
+        function loadShopFloors() {
+            var plantId = $('#PlantId').val();
+            $.ajax({
+                url: '@Url.Action("GetShopFloorByPlantId", "User")', 
+                data: { plantId: plantId },
+                success: function (data) {
+                    var container = $('#shopFloorsContainer');
+                    container.empty();
+                    if (data.length > 0) {
+                        data.forEach(function (shop) {
+                            var checkbox = $('<div><label><input type="checkbox" name="selectedShopFloors" value="' + shop.shopFloorId + '" /> ' + shop.shopFloorName + '</label></div>');
+                            container.append(checkbox);
+                        });
+                    } else {
+                        container.append('<p>No shop floors available for this plant.</p>');
+                    }
+                },
+                error: function () {
+                    alert('Error loading shop floors.');
+                }
+            });
+        }
+    </script>
+}
+

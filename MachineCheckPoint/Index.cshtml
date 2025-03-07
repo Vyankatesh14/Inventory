@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Unioteq.TrackNTrace.Models.Entity.MachineCheckPointEntity>
+
+
+<!-- Display TempData Messages -->
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xxl-12">
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title">@ViewBag.Title</h5>
+                <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Create", "MachineCheckPoint")">
+                    <i class="bi bi-plus-square"></i> Create New
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="myTable" class="table table-bordered m-0">
+                        <thead>
+                            <tr>
+                                <th scope="col">Machine Name</th>
+                                <th scope="col">Machine Part Name</th>
+                                <th scope="col">CheckPoint Name</th>
+                                <th scope="col">Effect</th>
+                                <th scope="col">Check Method</th>
+                                <th scope="col">Value Range From</th>
+                                <th scope="col">Is Active</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.MachineName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.MachinePartName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CheckPointName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Effect)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.CheckMethod)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.StandardText)</td>
+                                    <td>
+                                        @if (item.IsActive)
+                                        {
+                                            <span class="badge border border-success text-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge border border-danger text-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <a class="btn btn-outline-info btn-sm" href="@Url.Action("Edit", "MachineCheckPoint", new { id = item.MachineCheckPointId })">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+
+                                        <!-- Delete Form -->
+                                        <form asp-action="DeleteConfirmed" method="post" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this CheckPoint?');">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.MachineCheckPointId" />
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->
+@section scripts {
+    <!-- DataTable JS -->
+    <script src="https://cdn.datatables.net/2.0.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+}
